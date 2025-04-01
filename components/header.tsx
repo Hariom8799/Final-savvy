@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useRecoilValue } from "recoil"
 import { Menu, ShoppingBag, User } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -36,8 +37,11 @@ export function Header() {
   ]
 
   return (
-    <header
+    <motion.header
       className={`sticky top-0 z-50 w-full transition-all ${isScrolled ? "bg-background/80 backdrop-blur-sm border-b" : "bg-transparent"}`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-6 md:gap-8 lg:gap-10">
@@ -51,9 +55,12 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${pathname === item.href ? "text-foreground" : "text-muted-foreground"}`}
+                className={`text-sm font-medium transition-colors hover:text-primary relative ${pathname === item.href ? "text-foreground" : "text-muted-foreground"}`}
               >
                 {item.label}
+                {pathname === item.href && (
+                  <motion.div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary" layoutId="underline" />
+                )}
               </Link>
             ))}
           </nav>
@@ -65,11 +72,18 @@ export function Header() {
           <Link href="/cart" className="relative">
             <Button variant="ghost" size="icon">
               <ShoppingBag className="h-5 w-5" />
-              {cartItemsCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
-                  {cartItemsCount}
-                </span>
-              )}
+              <AnimatePresence>
+                {cartItemsCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground"
+                  >
+                    {cartItemsCount}
+                  </motion.span>
+                )}
+              </AnimatePresence>
               <span className="sr-only">Cart</span>
             </Button>
           </Link>
@@ -95,14 +109,20 @@ export function Header() {
                   <span className="font-bold text-xl">Savvy Bags</span>
                 </Link>
                 <nav className="flex flex-col gap-4">
-                  {navItems.map((item) => (
-                    <Link
+                  {navItems.map((item, index) => (
+                    <motion.div
                       key={item.href}
-                      href={item.href}
-                      className={`text-sm font-medium transition-colors hover:text-primary ${pathname === item.href ? "text-foreground" : "text-muted-foreground"}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
                     >
-                      {item.label}
-                    </Link>
+                      <Link
+                        href={item.href}
+                        className={`text-sm font-medium transition-colors hover:text-primary ${pathname === item.href ? "text-foreground" : "text-muted-foreground"}`}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
                   ))}
                 </nav>
                 <div className="flex flex-col gap-2 mt-auto">
@@ -120,7 +140,7 @@ export function Header() {
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   )
 }
 
