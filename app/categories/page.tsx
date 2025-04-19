@@ -1,206 +1,165 @@
-import Image from "next/image"
-import { CheckCircle, Users, Heart, Award, Leaf, Clock } from "lucide-react"
+"use client"
 
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
 import { PageTransition } from "@/components/page-transition"
 import { AnimatedSection } from "@/components/animated-section"
+import { GlassCard } from "@/components/ui/glass-card"
+import { VectorIllustration } from "@/components/vector-illustration"
 
-export default function AboutPage() {
-  const values = [
+export default function CategoriesPage() {
+  const categories = [
     {
-      icon: <Heart className="h-8 w-8 text-primary" />,
-      title: "Passion for Quality",
-      description: "We're obsessed with creating bags that exceed expectations in both form and function.",
+      id: "casual",
+      name: "Casual",
+      description: "Perfect for everyday use, our casual tote bags combine style and practicality.",
+      image: "/images/casual-tote.jpg",
+      products: 12,
+      featured: true,
     },
     {
-      icon: <Leaf className="h-8 w-8 text-primary" />,
-      title: "Sustainability",
-      description: "We're committed to environmentally responsible practices throughout our production process.",
+      id: "business",
+      name: "Business",
+      description: "Professional and elegant totes designed for the modern workplace.",
+      image: "/images/business-tote.jpg",
+      products: 8,
+      featured: true,
     },
     {
-      icon: <Users className="h-8 w-8 text-primary" />,
-      title: "Customer Focus",
-      description: "Your satisfaction drives everything we do, from design to delivery and beyond.",
+      id: "travel",
+      name: "Travel",
+      description: "Durable and spacious bags that make the perfect travel companion.",
+      image: "/images/travel-tote.jpg",
+      products: 10,
+      featured: true,
     },
     {
-      icon: <Award className="h-8 w-8 text-primary" />,
-      title: "Craftsmanship",
-      description: "Each bag is meticulously crafted by skilled artisans who take pride in their work.",
+      id: "eco-friendly",
+      name: "Eco-Friendly",
+      description: "Sustainable bags made from recycled and environmentally friendly materials.",
+      image: "/images/bag-1.jpg",
+      products: 6,
+      featured: false,
     },
     {
-      icon: <Clock className="h-8 w-8 text-primary" />,
-      title: "Timeless Design",
-      description: "We create bags that transcend trends and remain stylish for years to come.",
-    },
-  ]
-
-  const team = [
-    {
-      name: "Sarah Johnson",
-      role: "Founder & Creative Director",
-      image: "/api/placeholder?text=Sarah",
-      bio: "With over 15 years in fashion design, Sarah founded Savvy Bags with a vision to create beautiful, functional bags for everyday life.",
+      id: "limited-edition",
+      name: "Limited Edition",
+      description: "Exclusive designs available for a limited time only.",
+      image: "/images/bag-2.jpg",
+      products: 4,
+      featured: false,
     },
     {
-      name: "Michael Chen",
-      role: "Head of Production",
-      image: "/api/placeholder?text=Michael",
-      bio: "Michael ensures that every bag meets our exacting standards for quality and craftsmanship.",
-    },
-    {
-      name: "Olivia Rodriguez",
-      role: "Design Lead",
-      image: "/api/placeholder?text=Olivia",
-      bio: "Olivia brings fresh, innovative designs to our collections while maintaining our signature aesthetic.",
+      id: "seasonal",
+      name: "Seasonal",
+      description: "Special collections that change with the seasons.",
+      image: "/images/bag-3.jpg",
+      products: 7,
+      featured: false,
     },
   ]
 
   return (
     <PageTransition>
-      {/* Hero Section */}
-      <div className="relative h-[50vh] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-primary/10 z-10" />
-        <Image src="/images/bag-2.jpg" alt="About Savvy Bags" fill className="object-cover" priority />
-        <div className="absolute inset-0 flex items-center z-20">
-          <div className="container px-4 md:px-6">
-            <AnimatedSection>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-md">Our Story</h1>
-              <p className="mt-4 max-w-xl text-white/90 text-lg md:text-xl drop-shadow-md">
-                Crafting premium tote bags with passion and purpose since 2015.
-              </p>
-            </AnimatedSection>
+      <div className="relative">
+        {/* Hero Section */}
+        <div className="relative h-[50vh] overflow-hidden animated-gradient">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-10" />
+          <div className="absolute inset-0 flex items-center z-20">
+            <div className="container px-4 md:px-6">
+              <AnimatedSection>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold neon-text mb-4">Our Collections</h1>
+                <p className="mt-4 max-w-xl text-white/90 text-lg md:text-xl">
+                  Explore our carefully curated categories of premium tote bags designed for every occasion.
+                </p>
+              </AnimatedSection>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Mission Section */}
-      <div className="container px-4 py-16 md:px-6 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <AnimatedSection>
-            <div className="relative h-[400px] rounded-xl overflow-hidden">
-              <Image src="/images/bag-3.jpg" alt="Our Mission" fill className="object-cover" />
-            </div>
-          </AnimatedSection>
-
+        {/* Featured Categories */}
+        <div className="container px-4 py-16 md:px-6 md:py-24">
           <AnimatedSection delay={0.3}>
-            <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
-            <p className="text-lg text-muted-foreground mb-6">
-              At Savvy Bags, we believe that a great bag is more than just an accessory—it's an essential companion for
-              life's journey. Our mission is to create beautiful, functional tote bags that enhance your everyday
-              experiences.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6">
-              We're committed to sustainable practices, exceptional craftsmanship, and designs that stand the test of
-              time. Each bag is thoughtfully created to be both practical and stylish, meeting the needs of our diverse
-              customers.
-            </p>
-            <ul className="space-y-2">
-              {["Premium materials", "Ethical production", "Timeless design", "Customer satisfaction"].map(
-                (item, index) => (
-                  <li key={index} className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-primary mr-2" />
-                    <span>{item}</span>
-                  </li>
-                ),
-              )}
-            </ul>
+            <h2 className="text-3xl font-bold mb-12 text-center neon-text">Featured Collections</h2>
           </AnimatedSection>
-        </div>
-      </div>
 
-      {/* Values Section */}
-      <div className="bg-muted/50 py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <AnimatedSection>
-            <h2 className="text-3xl font-bold mb-12 text-center">Our Values</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {categories
+              .filter((cat) => cat.featured)
+              .map((category, index) => (
+                <AnimatedSection key={category.id} delay={0.4 + index * 0.1}>
+                  <Link href={`/categories/${category.id}`} className="group block">
+                    <GlassCard neon className="p-0 h-full hoverable">
+                      <div className="relative h-80 overflow-hidden">
+                        <Image
+                          src={category.image || "/placeholder.svg"}
+                          alt={category.name}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        <div className="absolute inset-0 flex flex-col justify-end p-6">
+                          <h3 className="text-2xl font-bold text-white neon-text">{category.name}</h3>
+                          <p className="mt-2 text-white/80">{category.description}</p>
+                          <div className="mt-4 flex items-center text-white">
+                            <span>{category.products} Products</span>
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                          </div>
+                        </div>
+                      </div>
+                    </GlassCard>
+                  </Link>
+                </AnimatedSection>
+              ))}
+          </div>
+        </div>
+
+        {/* Vector Illustration */}
+        <div className="py-16 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-primary/10 z-0"></div>
+          <div className="container px-4 md:px-6 relative z-10">
+            <div className="max-w-3xl mx-auto">
+              <AnimatedSection>
+                <VectorIllustration type="shopping" className="w-full h-64" />
+              </AnimatedSection>
+            </div>
+          </div>
+        </div>
+
+        {/* All Categories */}
+        <div className="container px-4 py-16 md:px-6 md:py-24">
+          <AnimatedSection delay={0.5}>
+            <h2 className="text-3xl font-bold mb-12 text-center neon-text">All Collections</h2>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {values.map((value, index) => (
-              <AnimatedSection key={index} delay={0.2 + index * 0.1}>
-                <div className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow h-full">
-                  <div className="mb-4">{value.icon}</div>
-                  <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-                  <p className="text-muted-foreground">{value.description}</p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Team Section */}
-      <div className="container px-4 py-16 md:px-6 md:py-24">
-        <AnimatedSection>
-          <h2 className="text-3xl font-bold mb-12 text-center">Meet Our Team</h2>
-        </AnimatedSection>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {team.map((member, index) => (
-            <AnimatedSection key={index} delay={0.3 + index * 0.1}>
-              <div className="text-center">
-                <div className="relative w-48 h-48 mx-auto rounded-full overflow-hidden mb-6">
-                  <Image src={member.image || "/placeholder.svg"} alt={member.name} fill className="object-cover" />
-                </div>
-                <h3 className="text-xl font-semibold">{member.name}</h3>
-                <p className="text-primary mb-4">{member.role}</p>
-                <p className="text-muted-foreground">{member.bio}</p>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-      </div>
-
-      {/* Timeline */}
-      <div className="bg-muted/50 py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <AnimatedSection>
-            <h2 className="text-3xl font-bold mb-12 text-center">Our Journey</h2>
-          </AnimatedSection>
-
-          <div className="max-w-3xl mx-auto">
-            {[
-              {
-                year: "2015",
-                title: "The Beginning",
-                description: "Savvy Bags was founded with a vision to create beautiful, functional tote bags.",
-              },
-              {
-                year: "2017",
-                title: "Expanding Collections",
-                description: "We introduced our first specialized collections for business and travel.",
-              },
-              {
-                year: "2019",
-                title: "Sustainability Initiative",
-                description: "We committed to using eco-friendly materials and ethical production practices.",
-              },
-              {
-                year: "2021",
-                title: "Global Presence",
-                description: "Our bags became available worldwide, reaching customers in over 30 countries.",
-              },
-              {
-                year: "2023",
-                title: "Innovation",
-                description: "We launched our first collection of smart bags with integrated technology.",
-              },
-            ].map((event, index) => (
-              <AnimatedSection key={index} delay={0.2 + index * 0.1}>
-                <div className="flex mb-8 last:mb-0">
-                  <div className="mr-4 md:mr-8">
-                    <div className="flex flex-col items-center">
-                      <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                        {event.year.substring(2)}
-                      </div>
-                      {index < 4 && <div className="w-0.5 h-full bg-border mt-2"></div>}
+            {categories.map((category, index) => (
+              <AnimatedSection key={category.id} delay={0.6 + index * 0.1}>
+                <GlassCard neon className="h-full hoverable">
+                  <div className="relative h-48">
+                    <Image
+                      src={category.image || "/placeholder.svg"}
+                      alt={category.name}
+                      fill
+                      className="object-cover rounded-md"
+                    />
+                    <div className="absolute top-2 right-2 bg-primary/80 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full">
+                      {category.products} Products
                     </div>
                   </div>
-                  <div className="pt-1.5">
-                    <h3 className="text-xl font-semibold">{event.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-1">{event.year}</p>
-                    <p className="text-muted-foreground">{event.description}</p>
+                  <div className="pt-6">
+                    <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
+                    <p className="text-muted-foreground mb-4">{category.description}</p>
+                    <div className="flex justify-between items-center">
+                      <Button asChild variant="outline" size="sm" className="hoverable">
+                        <Link href={`/categories/${category.id}`}>View Collection</Link>
+                      </Button>
+                    </div>
                   </div>
-                </div>
+                </GlassCard>
               </AnimatedSection>
             ))}
           </div>
@@ -209,4 +168,3 @@ export default function AboutPage() {
     </PageTransition>
   )
 }
-

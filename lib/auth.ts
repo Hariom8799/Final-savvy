@@ -1,22 +1,28 @@
-// This is a mock implementation for demonstration purposes
-// In a real app, you would use a proper authentication library like NextAuth.js
+import { getServerSession } from "next-auth/next"
+import { redirect } from "next/navigation"
 
-interface SignInData {
-  email: string
-  password: string
+export async function getSession() {
+  return await getServerSession()
 }
 
-interface SignUpData {
-  name: string
-  email: string
-  password: string
+export async function getCurrentUser() {
+  const session = await getSession()
+  return session?.user
 }
 
-export async function signIn(data: SignInData): Promise<void> {
-  // Simulate API call
+export async function requireAuth() {
+  const user = await getCurrentUser()
+  if (!user) {
+    redirect("/auth/sign-in")
+  }
+  return user
+}
+
+// Mock functions for demonstration
+export async function signIn(data: { email: string; password: string }): Promise<void> {
+  // In a real app, this would be handled by NextAuth
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      // In a real app, you would validate credentials against your database
       if (data.email === "user@example.com" && data.password === "password123") {
         resolve()
       } else {
@@ -26,27 +32,20 @@ export async function signIn(data: SignInData): Promise<void> {
   })
 }
 
-export async function signUp(data: SignUpData): Promise<void> {
-  // Simulate API call
+export async function signUp(data: { name: string; email: string; password: string }): Promise<void> {
+  // In a real app, this would create a new user in your database
   return new Promise((resolve) => {
     setTimeout(() => {
-      // In a real app, you would create a new user in your database
       resolve()
     }, 1000)
   })
 }
 
 export async function signOut(): Promise<void> {
-  // Simulate API call
+  // In a real app, this would be handled by NextAuth
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve()
     }, 500)
   })
 }
-
-export function getCurrentUser() {
-  // In a real app, you would get the current user from your auth provider
-  return null
-}
-
